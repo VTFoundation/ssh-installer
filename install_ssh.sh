@@ -2,11 +2,10 @@
 
 # Check if curl is installed
 if ! command -v curl &> /dev/null; then
-    echo "curl is not installed. Installing..."
-    sudo apt-get update
-    sudo apt-get install -y curl
-else
-    echo "curl is already installed."
+    echo "curl is not installed. Please install curl using the following command:"
+    echo "sudo apt-get update && sudo apt-get install -y curl"
+    echo "After installing curl, rerun this script to install the SSH server."
+    exit 1
 fi
 
 # Check if openssh-server is installed
@@ -24,4 +23,9 @@ sudo systemctl enable ssh
 # Start the SSH service
 sudo systemctl start ssh
 
+# Display the status of the SSH service
+echo "Checking the status of the SSH service..."
+sudo systemctl status ssh --no-pager | head -n 10
+
 echo "SSH server has been installed and started. It will now start on every boot."
+
